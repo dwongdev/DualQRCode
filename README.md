@@ -1,5 +1,7 @@
 # Dual-Link QR Code Generator
 
+https://dualqrcode.com/
+
 A React application that generates a single QR code capable of encoding two different URLs simultaneously. When scanned from different angles, the QR code will reveal different URLs, creating an ambiguous or dual-purpose QR code.
 
 ## How It Works
