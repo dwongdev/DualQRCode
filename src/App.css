@@ -71,6 +71,27 @@ button:hover {
   height: auto;
 }
 
+.github-button {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #24292e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.github-button:hover {
+  background-color: #2f363d;
+}
+
 .footer {
   margin-top: 1rem;
   font-size: 0.9rem;
