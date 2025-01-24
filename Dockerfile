@@ -21,8 +21,18 @@ FROM nginx:alpine
 # Copy the build output from stage 1
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy nginx configuration if needed
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Create nginx configuration for SPA
+RUN echo 'server {\
+    listen 80;\
+    location / {\
+        root /usr/share/nginx/html;\
+        index index.html;\
+        try_files $uri $uri/ /index.html;\
+    }\
+}' > /etc/nginx/conf.d/default.conf
+
+# Set environment variables for Coolify
+ENV PORT=80
 
 # Expose port 80
 EXPOSE 80
