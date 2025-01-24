@@ -16,17 +16,19 @@ function App() {
       }
       setError('')
 
-      // Generate QR code data for both URLs
+      // Generate QR code data for both URLs with explicit version
       const qr1Data = await QRCode.create(url1, {
-        errorCorrectionLevel: 'H'
+        errorCorrectionLevel: 'H',
+        version: 4  // Reduced from 10 to 8 for smaller size while maintaining readability
       })
       const qr2Data = await QRCode.create(url2, {
-        errorCorrectionLevel: 'H'
+        errorCorrectionLevel: 'H',
+        version: 4  // Use same version for second QR code
       })
 
       const moduleCount = qr1Data.modules.size
-      const cellSize = 8 // Size of each QR code cell in pixels
-      const margin = 4 * cellSize // 4 cells margin
+      const cellSize = 6 // Reduced from 8 to 6 pixels
+      const margin = 3 * cellSize // Reduced from 4 to 3 cells margin
       const size = moduleCount * cellSize + 2 * margin
 
       // Create canvas for the merged QR code
@@ -118,6 +120,7 @@ function App() {
         </div>
       )}
       <p className="app-subtitle">Try scanning from different angles</p>
+      <div className="error">QR Code favors 2nd URL most of the time</div>
       <div className="footer">
         Inspired by <a href="https://mstdn.social/@isziaui/113874436953157913" target="_blank" rel="noopener noreferrer">Christian Walther</a>
       </div>
