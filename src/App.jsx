@@ -9,6 +9,7 @@ function App() {
   const [error, setError] = useState('')
   const [splitPattern, setSplitPattern] = useState('vertical')
   const [invertUrls, setInvertUrls] = useState(false)
+  const [qrVersion, setQrVersion] = useState(4)
 
   const generateDualQRCode = async () => {
     try {
@@ -21,11 +22,11 @@ function App() {
       // Generate QR code data for both URLs with explicit version
       const qr1Data = await QRCode.create(url1, {
         errorCorrectionLevel: 'H',
-        version: 4  // Reduced from 10 to 8 for smaller size while maintaining readability
+        version: qrVersion
       })
       const qr2Data = await QRCode.create(url2, {
         errorCorrectionLevel: 'H',
-        version: 4  // Use same version for second QR code
+        version: qrVersion
       })
 
       const moduleCount = qr1Data.modules.size
@@ -169,6 +170,54 @@ function App() {
             Diagonal Split
           </label>
         </div>
+        <div className="pattern-selector">
+          <label>QR Code Version</label>
+          <label>
+            <input
+              type="radio"
+              value="2"
+              checked={qrVersion === 2}
+              onChange={(e) => setQrVersion(Number(e.target.value))}
+            />
+            v2
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="4"
+              checked={qrVersion === 4}
+              onChange={(e) => setQrVersion(Number(e.target.value))}
+            />
+            v4
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="6"
+              checked={qrVersion === 6}
+              onChange={(e) => setQrVersion(Number(e.target.value))}
+            />
+            v6
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="8"
+              checked={qrVersion === 8}
+              onChange={(e) => setQrVersion(Number(e.target.value))}
+            />
+            v8
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="10"
+              checked={qrVersion === 10}
+              onChange={(e) => setQrVersion(Number(e.target.value))}
+            />
+            v10
+          </label>
+        </div>
         <div className="invert-checkbox">
           <input
             type="checkbox"
@@ -191,7 +240,7 @@ function App() {
       <div className="error">WARNING: This is experimental code that goes against and breaks the QR code standard. 
         This should NEVER be used for real world applications and is merely a proof of concept.</div>
         <div className="footer">
-        All processing is client side and no data is sent to a server.
+        All processing is client side and no data is sent to a server
         </div>
       <div className="footer">
         Inspired by <a href="https://mstdn.social/@isziaui/113874436953157913" target="_blank" rel="noopener noreferrer">Christian Walther</a>
