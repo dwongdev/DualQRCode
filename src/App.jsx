@@ -131,7 +131,9 @@ function App() {
         </div>
       )}
       <p className="app-subtitle">Try scanning from different angles</p>
-      <div className="error">QR Code favors 2nd URL most of the time</div>
+      <div className="error">QR Code favors 2nd URL <strong>most</strong> of the time</div>
+      <div className="error">WARNING: This is experimental code that goes against and breaks the QR code standard. 
+        This should NEVER be used for real world applications and is merely a proof of concept.</div>
       <div className="footer">
         Inspired by <a href="https://mstdn.social/@isziaui/113874436953157913" target="_blank" rel="noopener noreferrer">Christian Walther</a>
       </div>
