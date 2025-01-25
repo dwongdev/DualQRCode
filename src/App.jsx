@@ -7,6 +7,8 @@ function App() {
   const [url2, setUrl2] = useState('')
   const [qrCodeData, setQrCodeData] = useState('')
   const [error, setError] = useState('')
+  const [splitPattern, setSplitPattern] = useState('vertical')
+  const [invertUrls, setInvertUrls] = useState(false)
 
   const generateDualQRCode = async () => {
     try {
@@ -44,8 +46,8 @@ function App() {
       // Draw QR code cells
       for (let row = 0; row < moduleCount; row++) {
         for (let col = 0; col < moduleCount; col++) {
-          const cell1 = qr1Data.modules.get(row, col)
-          const cell2 = qr2Data.modules.get(row, col)
+          const cell1 = invertUrls ? qr2Data.modules.get(row, col) : qr1Data.modules.get(row, col)
+          const cell2 = invertUrls ? qr1Data.modules.get(row, col) : qr2Data.modules.get(row, col)
           
           const x = col * cellSize + margin
           const y = row * cellSize + margin
@@ -55,20 +57,36 @@ function App() {
             ctx.fillStyle = cell1 ? '#000000' : '#FFFFFF'
             ctx.fillRect(x, y, cellSize, cellSize)
           } else {
-            // If cells differ, create diagonal split pattern
-            ctx.fillStyle = cell1 ? '#000000' : '#FFFFFF'
-            ctx.beginPath()
-            ctx.moveTo(x, y)
-            ctx.lineTo(x + cellSize, y)
-            ctx.lineTo(x + cellSize, y + cellSize)
-            ctx.fill()
+            if (splitPattern === 'diagonal') {
+              // Diagonal split pattern
+              ctx.fillStyle = cell1 ? '#000000' : '#FFFFFF'
+              ctx.beginPath()
+              ctx.moveTo(x, y)
+              ctx.lineTo(x + cellSize, y)
+              ctx.lineTo(x + cellSize, y + cellSize)
+              ctx.fill()
 
-            ctx.fillStyle = cell2 ? '#000000' : '#FFFFFF'
-            ctx.beginPath()
-            ctx.moveTo(x, y)
-            ctx.lineTo(x, y + cellSize)
-            ctx.lineTo(x + cellSize, y + cellSize)
-            ctx.fill()
+              ctx.fillStyle = cell2 ? '#000000' : '#FFFFFF'
+              ctx.beginPath()
+              ctx.moveTo(x, y)
+              ctx.lineTo(x, y + cellSize)
+              ctx.lineTo(x + cellSize, y + cellSize)
+              ctx.fill()
+            } else if (splitPattern === 'horizontal') {
+              // Horizontal split pattern
+              ctx.fillStyle = cell1 ? '#000000' : '#FFFFFF'
+              ctx.fillRect(x, y, cellSize, cellSize / 2)
+
+              ctx.fillStyle = cell2 ? '#000000' : '#FFFFFF'
+              ctx.fillRect(x, y + cellSize / 2, cellSize, cellSize / 2)
+            } else {
+              // Vertical split pattern
+              ctx.fillStyle = cell1 ? '#000000' : '#FFFFFF'
+              ctx.fillRect(x, y, cellSize / 2, cellSize)
+
+              ctx.fillStyle = cell2 ? '#000000' : '#FFFFFF'
+              ctx.fillRect(x + cellSize / 2, y, cellSize / 2, cellSize)
+            }
           }
         }
       }
@@ -122,6 +140,44 @@ function App() {
             }
           }}
         />
+        <div className="pattern-selector">
+          <label>
+            <input
+              type="radio"
+              value="vertical"
+              checked={splitPattern === 'vertical'}
+              onChange={(e) => setSplitPattern(e.target.value)}
+            />
+            Vertical Split
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="horizontal"
+              checked={splitPattern === 'horizontal'}
+              onChange={(e) => setSplitPattern(e.target.value)}
+            />
+            Horizontal Split
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="diagonal"
+              checked={splitPattern === 'diagonal'}
+              onChange={(e) => setSplitPattern(e.target.value)}
+            />
+            Diagonal Split
+          </label>
+        </div>
+        <div className="invert-checkbox">
+          <input
+            type="checkbox"
+            checked={invertUrls}
+            onChange={(e) => setInvertUrls(e.target.checked)}
+            id="invert-checkbox"
+          />
+          <label htmlFor="invert-checkbox">Invert URL Order</label>
+        </div>
         <button onClick={generateDualQRCode}>Generate QR Code</button>
       </div>
       {error && <div className="error">{error}</div>}
@@ -134,6 +190,9 @@ function App() {
       <div className="error">QR Code favors 2nd URL <strong>most</strong> of the time</div>
       <div className="error">WARNING: This is experimental code that goes against and breaks the QR code standard. 
         This should NEVER be used for real world applications and is merely a proof of concept.</div>
+        <div className="footer">
+        All processing is client side and no data is sent to a server.
+        </div>
       <div className="footer">
         Inspired by <a href="https://mstdn.social/@isziaui/113874436953157913" target="_blank" rel="noopener noreferrer">Christian Walther</a>
       </div>
