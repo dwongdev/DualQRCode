@@ -176,7 +176,7 @@ function App() {
             onChange={(e) => setInvertUrls(e.target.checked)}
             id="invert-checkbox"
           />
-          <label htmlFor="invert-checkbox">Invert URL Order</label>
+          <label htmlFor="invert-checkbox">Invert URL Order (May help favor the 1st URL)</label>
         </div>
         <button onClick={generateDualQRCode}>Generate QR Code</button>
       </div>
