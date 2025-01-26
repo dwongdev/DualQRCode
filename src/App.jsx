@@ -30,15 +30,20 @@ function App() {
       })
 
       const moduleCount = qr1Data.modules.size
-      const cellSize = 6 // Reduced from 8 to 6 pixels
-      const margin = 3 * cellSize // Reduced from 4 to 3 cells margin
+      const cellSize = 10 // Increased for better quality
+      const margin = 4 * cellSize // Adjusted margin for better scanning
       const size = moduleCount * cellSize + 2 * margin
 
-      // Create canvas for the merged QR code
+      // Create high-resolution canvas for the merged QR code
       const canvas = document.createElement('canvas')
-      canvas.width = size
-      canvas.height = size
-      const ctx = canvas.getContext('2d')
+      const scale = 2 // Scale factor for higher resolution
+      canvas.width = size * scale
+      canvas.height = size * scale
+      const ctx = canvas.getContext('2d', { alpha: false })
+      
+      // Enable high-quality rendering
+      ctx.imageSmoothingEnabled = false
+      ctx.scale(scale, scale)
 
       // Fill background
       ctx.fillStyle = '#FFFFFF'
