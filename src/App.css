@@ -16,6 +16,15 @@
   box-sizing: border-box;
 }
 
+#header {
+  margin-bottom: 0;
+ }
+
+#subheader {
+  margin: 0;
+  padding: 0;
+}
+
 .app-title {
   margin-bottom: 0;
   text-align: center;

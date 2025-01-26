@@ -120,7 +120,8 @@ function App() {
         </svg>
         GitHub
       </a>
-      <h1>Dual-Link QR Code Generator</h1>
+      <h1 id="header">Dual-Link QR Code Generator</h1>
+      <h4 id="subheader">Embed two URLs in a single QR code</h4>
       <div className="input-container">
         <input
           type="url"
