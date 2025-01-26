@@ -143,13 +143,16 @@ function App() {
         />
         <div className="pattern-selector">
           <label>
+            Pixel Split
+          </label>
+          <label>
             <input
               type="radio"
               value="vertical"
               checked={splitPattern === 'vertical'}
               onChange={(e) => setSplitPattern(e.target.value)}
             />
-            Vertical Split
+            Vertical
           </label>
           <label>
             <input
@@ -158,7 +161,7 @@ function App() {
               checked={splitPattern === 'horizontal'}
               onChange={(e) => setSplitPattern(e.target.value)}
             />
-            Horizontal Split
+            Horizontal
           </label>
           <label>
             <input
@@ -167,7 +170,7 @@ function App() {
               checked={splitPattern === 'diagonal'}
               onChange={(e) => setSplitPattern(e.target.value)}
             />
-            Diagonal Split
+            Diagonal
           </label>
         </div>
         <div className="pattern-selector">
