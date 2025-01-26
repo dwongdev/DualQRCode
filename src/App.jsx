@@ -253,6 +253,9 @@ function App() {
       <div className="footer">
         Inspired by <a href="https://mstdn.social/@isziaui/113874436953157913" target="_blank" rel="noopener noreferrer">Christian Walther</a>
       </div>
+      <div className="footer">
+       <a href="https://buymeacoffee.com/zacreese" target="_blank">Buy me a coffee ☕</a>
+      </div>
     </div>
   )
 }
