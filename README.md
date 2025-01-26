@@ -1,5 +1,7 @@
 # Dual-Link QR Code Generator
 
+Embed two URLs inside one QR code
+
 https://dualqrcode.com/
 
 A React application that generates a single QR code capable of encoding two different URLs simultaneously. When scanned from different angles, the QR code will reveal different URLs, creating an ambiguous or dual-purpose QR code.
@@ -8,7 +10,7 @@ WARNING: This is experimental code that goes against and breaks the QR code stan
 
 ## How It Works
 
-The generator creates two separate QR codes with high error correction (Level H) and combines them into a single image using pixel splicing. Each cell that differs between the two QR codes is split in two, creating a pattern that can be interpreted differently based on the scanning angle.
+The ambiguous QR code in this application works by combining two different QR codes into a single image using a split pixel pattern. When two QR codes have different patterns at the same position, the cell is split in half - one half represents the first QR code and the other half represents the second QR code. When both QR codes have the same pattern at a position (both black or both white), the cell is filled with a solid color. Due to the high error correction capability of QR codes (using error correction level 'H'), QR code scanners can still read either URL depending on the scanning angle. If you can't get it to open both URLs, keep trying from different angles!
 
 Key features:
 - Generates QR codes with 2 different URLs
