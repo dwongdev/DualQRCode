@@ -122,7 +122,7 @@ function App() {
         GitHub
       </a>
       <h1 id="header">Dual-Link QR Code Generator</h1>
-      <h4 id="subheader">Embed two URLs in a single QR code</h4>
+      <h4 id="subheader">Embed two URLs inside one QR code</h4>
       <div className="input-container">
         <input
           type="url"
