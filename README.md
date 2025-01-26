@@ -39,4 +39,4 @@ Key features:
 
 ## Example
 
-![Dual QR Code Example](https://i.imgur.com/0Za1Fj4.png)
+![Dual QR Code Example](https://i.imgur.com/oaTsbWd.png)
