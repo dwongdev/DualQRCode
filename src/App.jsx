@@ -247,7 +247,7 @@ function App() {
       <div className="error">WARNING: This is experimental code that goes against and breaks the QR code standard. 
         This should NEVER be used for real world applications and is merely a proof of concept.</div>
         <div className="footer">
-        All processing is client side and no data is sent to a server
+        All processing is client side and no data is collected
         </div>
       <div className="footer">
         Inspired by <a href="https://mstdn.social/@isziaui/113874436953157913" target="_blank" rel="noopener noreferrer">Christian Walther</a>
