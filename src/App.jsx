@@ -10,6 +10,7 @@ function App() {
   const [splitPattern, setSplitPattern] = useState('vertical')
   const [invertUrls, setInvertUrls] = useState(false)
   const [qrVersion, setQrVersion] = useState(4)
+  const [optionsOpen, setOptionsOpen] = useState(false)
 
   const generateDualQRCode = async () => {
     try {
@@ -147,94 +148,99 @@ function App() {
             }
           }}
         />
-        <div className="pattern-selector">
-          <label>
-            Pixel Split
-          </label>
-          <label>
+        <button className="options-toggle" onClick={() => setOptionsOpen(!optionsOpen)}>
+          {optionsOpen ? '▼ Options' : '▶ Options'}
+        </button>
+        <div className={`options-container ${optionsOpen ? 'open' : ''}`}>
+          <div className="pattern-selector">
+            <label>
+              Pixel Split
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="vertical"
+                checked={splitPattern === 'vertical'}
+                onChange={(e) => setSplitPattern(e.target.value)}
+              />
+              Vertical
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="horizontal"
+                checked={splitPattern === 'horizontal'}
+                onChange={(e) => setSplitPattern(e.target.value)}
+              />
+              Horizontal
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="diagonal"
+                checked={splitPattern === 'diagonal'}
+                onChange={(e) => setSplitPattern(e.target.value)}
+              />
+              Diagonal
+            </label>
+          </div>
+          <div className="pattern-selector">
+            <label>QR Code Version</label>
+            <label>
+              <input
+                type="radio"
+                value="2"
+                checked={qrVersion === 2}
+                onChange={(e) => setQrVersion(Number(e.target.value))}
+              />
+              v2
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="4"
+                checked={qrVersion === 4}
+                onChange={(e) => setQrVersion(Number(e.target.value))}
+              />
+              v4
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="6"
+                checked={qrVersion === 6}
+                onChange={(e) => setQrVersion(Number(e.target.value))}
+              />
+              v6
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="8"
+                checked={qrVersion === 8}
+                onChange={(e) => setQrVersion(Number(e.target.value))}
+              />
+              v8
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="10"
+                checked={qrVersion === 10}
+                onChange={(e) => setQrVersion(Number(e.target.value))}
+              />
+              v10
+            </label>
+          </div>
+          <div className="invert-checkbox">
             <input
-              type="radio"
-              value="vertical"
-              checked={splitPattern === 'vertical'}
-              onChange={(e) => setSplitPattern(e.target.value)}
+              type="checkbox"
+              checked={invertUrls}
+              onChange={(e) => setInvertUrls(e.target.checked)}
+              id="invert-checkbox"
             />
-            Vertical
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="horizontal"
-              checked={splitPattern === 'horizontal'}
-              onChange={(e) => setSplitPattern(e.target.value)}
-            />
-            Horizontal
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="diagonal"
-              checked={splitPattern === 'diagonal'}
-              onChange={(e) => setSplitPattern(e.target.value)}
-            />
-            Diagonal
-          </label>
-        </div>
-        <div className="pattern-selector">
-          <label>QR Code Version</label>
-          <label>
-            <input
-              type="radio"
-              value="2"
-              checked={qrVersion === 2}
-              onChange={(e) => setQrVersion(Number(e.target.value))}
-            />
-            v2
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="4"
-              checked={qrVersion === 4}
-              onChange={(e) => setQrVersion(Number(e.target.value))}
-            />
-            v4
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="6"
-              checked={qrVersion === 6}
-              onChange={(e) => setQrVersion(Number(e.target.value))}
-            />
-            v6
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="8"
-              checked={qrVersion === 8}
-              onChange={(e) => setQrVersion(Number(e.target.value))}
-            />
-            v8
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="10"
-              checked={qrVersion === 10}
-              onChange={(e) => setQrVersion(Number(e.target.value))}
-            />
-            v10
-          </label>
-        </div>
-        <div className="invert-checkbox">
-          <input
-            type="checkbox"
-            checked={invertUrls}
-            onChange={(e) => setInvertUrls(e.target.checked)}
-            id="invert-checkbox"
-          />
-          <label htmlFor="invert-checkbox">Invert Pixel Splitting</label>
+            <label htmlFor="invert-checkbox">Invert Pixel Splitting</label>
+          </div>
         </div>
         <button onClick={generateDualQRCode}>Generate QR Code</button>
       </div>
