@@ -233,7 +233,7 @@ function App() {
             onChange={(e) => setInvertUrls(e.target.checked)}
             id="invert-checkbox"
           />
-          <label htmlFor="invert-checkbox">Invert URL Order (May help favor the 1st URL)</label>
+          <label htmlFor="invert-checkbox">Invert Pixel Splitting</label>
         </div>
         <button onClick={generateDualQRCode}>Generate QR Code</button>
       </div>
@@ -244,7 +244,6 @@ function App() {
         </div>
       )}
       <p className="app-subtitle">Try scanning from different angles</p>
-      <div className="error">QR Code favors 2nd URL <strong>most</strong> of the time</div>
       <div className="error">WARNING: This is experimental code that goes against and breaks the QR code standard. 
         This should NEVER be used for real world applications and is merely a proof of concept.</div>
         <div className="footer">
