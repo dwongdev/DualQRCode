@@ -61,6 +61,49 @@
   background: rgba(34, 211, 238, 0.06);
 }
 
+.app-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.app-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-title-link:hover {
+  color: var(--accent);
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(34, 211, 238, 0.06);
+}
+
+.nav-link.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(34, 211, 238, 0.08);
+}
+
 /* Main layout */
 .app-main {
   display: grid;
@@ -310,6 +353,70 @@
   text-align: center;
 }
 
+/* About page */
+.about-main {
+  flex: 1;
+}
+
+.about-content {
+  gap: 1.25rem;
+}
+
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.about-section h3 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.about-section p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.about-steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.about-steps li {
+  margin-bottom: 0.5rem;
+}
+
+.about-steps li:last-child {
+  margin-bottom: 0;
+}
+
+.about-cta {
+  margin: 0.5rem 0 0;
+}
+
+.about-cta-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 12rem;
+  text-decoration: none;
+  color: var(--bg);
+}
+
+.about-cta-link:hover {
+  color: var(--bg);
+}
+
 /* Footer */
 .app-footer {
   padding-top: 0.5rem;
@@ -347,7 +454,7 @@
     align-items: stretch;
   }
 
-  .github-button {
+  .app-header-nav {
     align-self: flex-start;
   }
 
