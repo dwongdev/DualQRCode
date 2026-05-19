@@ -293,7 +293,10 @@ function App() {
           <div className="preview-content">
             {qrCodeData ? (
               <div className="qr-code-mat">
-                <img src={qrCodeData} alt="Dual QR Code" />
+                <img
+                  src={qrCodeData}
+                  alt="Generated dual-link QR code with two encoded URLs"
+                />
               </div>
             ) : (
               <div className="preview-empty">
