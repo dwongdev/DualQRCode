@@ -1,6 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import QRCode from 'qrcode'
 import './App.css'
+
+const ERROR_CORRECTION_LEVEL = 'H'
+const QR_VERSIONS = Array.from({ length: 40 }, (_, i) => i + 1)
+
+function findMinVersion(text) {
+  for (let version = 1; version <= 40; version++) {
+    try {
+      QRCode.create(text, { errorCorrectionLevel: ERROR_CORRECTION_LEVEL, version })
+      return version
+    } catch (err) {
+      if (err.message.includes('cannot contain')) continue
+      if (err.message.includes('too big')) return null
+      throw err
+    }
+  }
+  return null
+}
+
+function getMinVersionForUrls(url1, url2) {
+  const versions = [url1, url2].filter(Boolean).map(findMinVersion)
+  if (versions.length === 0) return undefined
+  if (versions.some((v) => v === null)) return null
+  return Math.max(...versions)
+}
+
+function resolveQrVersion(url1, url2, requestedVersion) {
+  const minVersion = getMinVersionForUrls(url1, url2)
+  if (minVersion === null) return null
+  return Math.max(requestedVersion, minVersion)
+}
 
 function App() {
   const [url1, setUrl1] = useState('')
@@ -12,6 +42,16 @@ function App() {
   const [qrVersion, setQrVersion] = useState(4)
   const [optionsOpen, setOptionsOpen] = useState(false)
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const minVersion = getMinVersionForUrls(url1, url2)
+      if (minVersion !== undefined) {
+        setQrVersion(minVersion)
+      }
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [url1, url2])
+
   const generateDualQRCode = async () => {
     try {
       if (!url1 || !url2) {
@@ -20,15 +60,16 @@ function App() {
       }
       setError('')
 
-      // Generate QR code data for both URLs with explicit version
-      const qr1Data = await QRCode.create(url1, {
-        errorCorrectionLevel: 'H',
-        version: qrVersion
-      })
-      const qr2Data = await QRCode.create(url2, {
-        errorCorrectionLevel: 'H',
-        version: qrVersion
-      })
+      const version = resolveQrVersion(url1, url2, qrVersion)
+      if (version === null) {
+        setError('URLs are too long to fit in any QR code version')
+        return
+      }
+      setQrVersion(version)
+
+      const qrOptions = { errorCorrectionLevel: ERROR_CORRECTION_LEVEL, version }
+      const qr1Data = await QRCode.create(url1, qrOptions)
+      const qr2Data = await QRCode.create(url2, qrOptions)
 
       const moduleCount = qr1Data.modules.size
       const cellSize = 10 // Increased for better quality
@@ -184,53 +225,19 @@ function App() {
               Diagonal
             </label>
           </div>
-          <div className="pattern-selector">
-            <label>QR Code Version</label>
-            <label>
-              <input
-                type="radio"
-                value="2"
-                checked={qrVersion === 2}
-                onChange={(e) => setQrVersion(Number(e.target.value))}
-              />
-              v2
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="4"
-                checked={qrVersion === 4}
-                onChange={(e) => setQrVersion(Number(e.target.value))}
-              />
-              v4
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="6"
-                checked={qrVersion === 6}
-                onChange={(e) => setQrVersion(Number(e.target.value))}
-              />
-              v6
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="8"
-                checked={qrVersion === 8}
-                onChange={(e) => setQrVersion(Number(e.target.value))}
-              />
-              v8
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="10"
-                checked={qrVersion === 10}
-                onChange={(e) => setQrVersion(Number(e.target.value))}
-              />
-              v10
-            </label>
+          <div className="version-selector">
+            <label htmlFor="qr-version">QR Code Version</label>
+            <select
+              id="qr-version"
+              value={qrVersion}
+              onChange={(e) => setQrVersion(Number(e.target.value))}
+            >
+              {QR_VERSIONS.map((v) => (
+                <option key={v} value={v}>
+                  v{v}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="invert-checkbox">
             <input
