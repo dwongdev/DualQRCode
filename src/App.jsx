@@ -251,8 +251,8 @@ function App() {
         </div>
       )}
       <p className="app-subtitle">Try scanning from different angles</p>
-      <div className="error">WARNING: This is experimental code that goes against and breaks the QR code standard. 
-        This should NEVER be used for real world applications and is merely a proof of concept.</div>
+      {/* <div className="error">WARNING: This is experimental code that goes against and breaks the QR code standard. 
+        This should NEVER be used for real world applications and is merely a proof of concept.</div> */}
         <div className="footer">
         All processing is client side and no data is collected
         </div>
